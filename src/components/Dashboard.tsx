@@ -1,7 +1,7 @@
 import React, { useMemo, Suspense } from 'react';
 import type { Laptop } from '../types';
 import { getStats, getAveragePriceByCompany, getRamDistribution, formatCurrency } from '../utils';
-import { BarChart3, Laptop2, IndianRupee, TrendingUp, Cpu } from 'lucide-react';
+import { BarChart3, Laptop2, IndianRupee, TrendingUp } from 'lucide-react';
 
 // Lazy load Recharts components
 const LazyBarChart = React.lazy(() =>
