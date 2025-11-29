@@ -8,8 +8,10 @@ const createAIClient = () => {
     // For this demo, we assume the environment is set up correctly as per instructions.
     throw new Error("API Key not found");
   }
+
+  const apiKey  = import.meta.env.VITE_API_KEY;
  
-  return new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
+  return new GoogleGenAI({ apiKey });
 };
 
 export const predictLaptopPrice = async (
