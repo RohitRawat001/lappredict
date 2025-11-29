@@ -102,11 +102,11 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
               RAM Configuration Market Share
             </h3>
             <div className="flex items-end justify-between h-48 space-x-2">
-              {ramDist.map((item, index) => {
+              {ramDist.map((item) => {
                 const maxVal = Math.max(...ramDist.map(r => r.value));
                 const heightPct = (item.value / maxVal) * 100;
                 return (
-                  <div key={item.label} className="flex-1 flex flex-col justify-end group">
+                  <div key={item.label } className="flex-1 flex flex-col justify-end group">
                     <div 
                       className="w-full bg-indigo-500/80 hover:bg-indigo-400 rounded-t-sm transition-all duration-700 ease-out relative"
                       style={{ height: `${heightPct}%` }}
