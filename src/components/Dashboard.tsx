@@ -98,6 +98,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           </LazyResponsiveContainer>
         </Suspense>
 
+<<<<<<< HEAD
         {/* RAM Distribution Chart */}
         <Suspense fallback={<div>Loading chart...</div>}>
           <LazyResponsiveContainer width="100%" height={300}>
@@ -109,6 +110,49 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
             </LazyBarChart>
           </LazyResponsiveContainer>
         </Suspense>
+=======
+        <div className="space-y-6">
+          {/* RAM Distribution */}
+          <div className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 p-6 rounded-2xl shadow-lg">
+            <h3 className="text-lg font-semibold text-white mb-6 flex items-center">
+              <Cpu className="w-5 h-5 mr-2 text-indigo-400" />
+              RAM Configuration Market Share
+            </h3>
+            <div className="flex items-end justify-between h-48 space-x-2">
+              {ramDist.map((item, index) => {
+                const maxVal = Math.max(...ramDist.map(r => r.value));
+                const heightPct = (item.value / maxVal) * 100;
+                return (
+                  <div key={item.label} className="flex-1 flex flex-col justify-end group">
+                    <div 
+                      className="w-full bg-indigo-500/80 hover:bg-indigo-400 rounded-t-sm transition-all duration-700 ease-out relative"
+                      style={{ height: `${heightPct}%` }}
+                    >
+                      <div className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs py-1 px-2 rounded pointer-events-none transition-opacity">
+                        {item.value} units
+                      </div>
+                    </div>
+                    <div className="text-xs text-slate-400 text-center mt-2 font-medium">{item.label}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Insights Text */}
+          <div className="bg-gradient-to-br from-slate-800/60 to-indigo-900/20 backdrop-blur-xl border border-slate-700/50 p-6 rounded-2xl shadow-lg">
+            <h3 className="text-lg font-semibold text-white mb-4">Dataset Highlights</h3>
+            <div className="space-y-4 text-slate-300">
+              <p className="text-sm leading-relaxed border-l-2 border-indigo-500 pl-4">
+                The dataset is dominated by <span className="text-white font-semibold">{stats.mostPopularBrand}</span>, representing a significant portion of the market share.
+              </p>
+              <p className="text-sm leading-relaxed border-l-2 border-emerald-500 pl-4">
+                Premium workstations reach up to <span className="text-white font-semibold">{formatCurrency(stats.mostExpensive?.price || 0)}</span>, while budget options start as low as <span className="text-white font-semibold">{formatCurrency(Math.min(...data.map(d => d.price)))}</span>.
+              </p>
+            </div>
+          </div>
+        </div>
+>>>>>>> parent of 9d62fde (3)
       </div>
     </div>
   );
