@@ -3,13 +3,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 import type { Laptop } from "./types";
 
 const createAIClient = () => {
-  if (!import.meta.env.VITE_API_KEY) {
-    // In a real scenario, handle this gracefully or throw.
-    // For this demo, we assume the environment is set up correctly as per instructions.
-    throw new Error("API Key not found");
-  }
-
-  const apiKey  = import.meta.env.VITE_API_KEY;
+  const apiKey  = import.meta.env.VITE_API_KEY || "";
  
   return new GoogleGenAI({ apiKey });
 };
