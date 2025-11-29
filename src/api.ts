@@ -3,7 +3,6 @@ import { GoogleGenAI, Type } from "@google/genai";
 import type { Laptop } from "./types";
 
 const createAIClient = () => {
-   console.log(import.meta.env.VITE_API_KEY)
   if (!import.meta.env.VITE_API_KEY) {
     // In a real scenario, handle this gracefully or throw.
     // For this demo, we assume the environment is set up correctly as per instructions.
