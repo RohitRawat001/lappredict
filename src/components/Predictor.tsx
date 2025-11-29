@@ -54,26 +54,24 @@ const Predictor: React.FC<PredictorProps> = ({ data }) => {
       setResult(prediction);
     } catch (error) {
       console.error(error);
-      setResult({ price: 0, reasoning: 'Failed to generate prediction.' });
+      setResult({ price: 0, reasoning: 'Prediction failed. Please try again.' });
     } finally {
       setLoading(false);
     }
   }, [form, data]);
 
-  // ---------------- Reusable Field ----------------
+  // ---------------- Field Component ----------------
   const Field = ({
     label,
     name,
     type = 'text',
     value,
-    placeholder,
     options,
   }: {
     label: string;
     name: keyof FormState;
     type?: 'text' | 'number' | 'select';
     value: any;
-    placeholder?: string;
     options?: string[];
   }) => (
     <div className="space-y-2">
@@ -85,8 +83,8 @@ const Predictor: React.FC<PredictorProps> = ({ data }) => {
           onChange={handleChange}
           className="w-full bg-slate-900/50 border border-slate-700 text-white rounded-lg p-3 appearance-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 outline-none transition"
         >
-          {options.map(o => (
-            <option key={o} value={o}>{o}</option>
+          {options.map(opt => (
+            <option key={opt} value={opt}>{opt}</option>
           ))}
         </select>
       ) : (
@@ -95,7 +93,6 @@ const Predictor: React.FC<PredictorProps> = ({ data }) => {
           name={name}
           value={value}
           onChange={handleChange}
-          placeholder={placeholder}
           step={type === 'number' ? '0.1' : undefined}
           className="w-full bg-slate-900/50 border border-slate-700 text-white rounded-lg p-3 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 outline-none transition placeholder-slate-600"
         />
@@ -103,10 +100,10 @@ const Predictor: React.FC<PredictorProps> = ({ data }) => {
     </div>
   );
 
-  // ---------------- Result Cards ----------------
+  // ---------------- Result Card ----------------
   const ResultCard = () => (
     <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-6">
-      {/* Price Card */}
+      {/* Price */}
       <div className="bg-gradient-to-br from-emerald-900/80 to-slate-900 border border-emerald-500/30 p-8 rounded-2xl text-center shadow-2xl relative overflow-hidden group">
         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
         <h3 className="text-emerald-400 font-medium mb-4 text-sm uppercase tracking-widest">Estimated Market Value</h3>
@@ -114,7 +111,7 @@ const Predictor: React.FC<PredictorProps> = ({ data }) => {
         <div className="text-emerald-500/60 text-xs">Based on {data.length} historical records</div>
       </div>
 
-      {/* Reasoning Card */}
+      {/* Reasoning */}
       <div className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 p-6 rounded-2xl shadow-lg">
         <h4 className="text-indigo-400 font-semibold mb-4 flex items-center">
           <div className="p-1.5 bg-indigo-500/10 rounded mr-2">
@@ -138,21 +135,21 @@ const Predictor: React.FC<PredictorProps> = ({ data }) => {
         </div>
         <h2 className="text-3xl font-bold text-white">Laptop Price Estimator</h2>
         <p className="text-slate-400 max-w-2xl mx-auto">
-          Gemini-powered AI analyzes market trends to estimate fair market value for any laptop configuration.
+          AI-powered estimator analyzes market trends to calculate fair market value for any laptop configuration.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Form Section */}
+        {/* Form */}
         <div className="lg:col-span-7 bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 p-6 md:p-8 rounded-2xl shadow-xl h-fit">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <Field label="Brand" name="company" type="select" options={COMPANIES} value={form.company} />
             <Field label="Type" name="typeName" type="select" options={TYPES} value={form.typeName} />
             <Field label="RAM (GB)" name="ram" type="number" value={form.ram} />
             <Field label="Weight (kg)" name="weight" type="number" value={form.weight} />
-            <Field label="Processor (CPU)" name="cpu" value={form.cpu} placeholder="e.g. Intel Core i7" />
-            <Field label="Graphics (GPU)" name="gpu" value={form.gpu} placeholder="e.g. Nvidia GeForce GTX 1050" />
-            <Field label="Storage" name="memory" value={form.memory} placeholder="e.g. 256GB SSD + 1TB HDD" />
+            <Field label="Processor (CPU)" name="cpu" value={form.cpu} />
+            <Field label="Graphics (GPU)" name="gpu" value={form.gpu} />
+            <Field label="Storage" name="memory" value={form.memory} />
             <Field label="Operating System" name="opSys" type="select" options={OS_LIST} value={form.opSys} />
           </div>
 
@@ -176,7 +173,7 @@ const Predictor: React.FC<PredictorProps> = ({ data }) => {
           </button>
         </div>
 
-        {/* Results Section */}
+        {/* Results */}
         <div className="lg:col-span-5 space-y-6">
           {!result && !loading && (
             <div className="h-full min-h-[300px] flex flex-col items-center justify-center text-slate-500 border-2 border-dashed border-slate-800 bg-slate-900/30 rounded-2xl p-8">
